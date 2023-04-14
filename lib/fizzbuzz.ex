@@ -6,7 +6,7 @@ defmodule Fizzbuzz do
   require Axon
   require Nx
 
-  @labels ~w[fizz buzz fizzbuzz]
+  # @labels ~w[fizz buzz fizzbuzz]
 
   def features(n) do
     [rem(n, 3), rem(n, 5), rem(n, 15)]
@@ -61,7 +61,8 @@ defmodule Fizzbuzz do
     targets = Fizzbuzz.targets()
 
     model
-    |> Axon.Training.step(loss, optimizer)
-    |> Axon.Training.train(train, targets, epochs: epochs, compiler: EXLA)
+    |> Axon.Loop.trainer(loss, optimizer)
+    |> Axon.Loop.run(train, targets, epochs: epochs, compiler: EXLA)
+    # |> Axon.Loop.run(train, targets, epochs: epochs, compiler: EXLA)
   end
 end
